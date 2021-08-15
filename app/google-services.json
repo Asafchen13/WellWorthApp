@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "822388598898",
+    "project_id": "wellworthapp-b2ced",
+    "storage_bucket": "wellworthapp-b2ced.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822388598898:android:25fc1612d2627407dbfaeb",
+        "android_client_info": {
+          "package_name": "com.example.loginregisterfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822388598898-ko0mdq0elhunudlvpo8vuprbka3ni0m3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.loginregisterfirebase",
+            "certificate_hash": "273d947ba83974af5963dc1895038401122c8e5f"
+          }
+        },
+        {
+          "client_id": "822388598898-02ka51s15e5bp4pir152qq7n8lea04u2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpOSq8cI2LiTRUdo08g6rh-wSM2j_6uhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822388598898-02ka51s15e5bp4pir152qq7n8lea04u2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
