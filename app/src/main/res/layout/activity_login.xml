@@ -9,15 +9,16 @@
     tools:context=".Login">
 
     <TextView
+        android:id="@+id/login_here"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="#CC000000"
-
         android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+
+        android:text="Login Here"
+        android:textColor="#CC000000"
         android:textSize="18sp"
-        android:text="Login Here"/>
+        android:textStyle="bold" />
 
     <EditText
         android:layout_marginTop="20dp"

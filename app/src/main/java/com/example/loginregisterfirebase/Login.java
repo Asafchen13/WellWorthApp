@@ -1,7 +1,9 @@
 package com.example.loginregisterfirebase;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.loginregisterfirebase.logic.Cryptocurrency;
+import com.example.loginregisterfirebase.managers.AppManager;
+import com.example.loginregisterfirebase.managers.CryptoAPIManager;
+import com.example.loginregisterfirebase.managers.DatabaseManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,22 +28,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Platform;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://wellworthapp-b2ced-default-rtdb.firebaseio.com/");
+    private EditText email;
+    private EditText password;
+    private Button loginBtn;
+    private TextView registerNowBtn;
 
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
 
-        final EditText email = findViewById(R.id.email);
-        final EditText password = findViewById(R.id.password);
-        final Button loginBtn = findViewById(R.id.loginBtn);
-        final TextView registerNowBtn = findViewById(R.id.registerNowBtn);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        loginBtn = findViewById(R.id.loginBtn);
+        registerNowBtn = findViewById(R.id.registerNowBtn);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -46,57 +62,26 @@ public class Login extends AppCompatActivity {
                 final String emailTxt = email.getText().toString();
                 final String passwordTxt = password.getText().toString();
 
-                if(emailTxt.isEmpty() || passwordTxt.isEmpty()){
+                if (emailTxt.isEmpty() || passwordTxt.isEmpty()) {
                     Toast.makeText(Login.this, "Please enter your Email or Password", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
 
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    mAuth.signInWithEmailAndPassword(emailTxt, passwordTxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            // check if email is exist in firebase database
-                            if (snapshot.hasChild(emailTxt)){
+                        public void onSuccess(AuthResult authResult) {
+                            Log.d("Login", authResult.toString());
+                            startActivity(new Intent(Login.this, HomePage.class));
 
-                                // email is exist in firebase database
-                                // now get password of user from firebase data and match it with user entered password
-
-                                final String getPassword = snapshot.child(emailTxt).child("password").getValue(String.class);
-
-                                if (getPassword.equals(passwordTxt)){
-                                    Toast.makeText(Login.this, "Successfully Logged in", Toast.LENGTH_SHORT).show();
-
-                                    // open MainActivity on success
-                                    startActivity(new Intent(Login.this, MainActivity.class));
-                                    finish();
-                                }
-                                else {
-                                    Toast.makeText(Login.this, "Wrong Password", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            else {
-                                Toast.makeText(Login.this, "Wrong Password", Toast.LENGTH_SHORT).show();
-                            }
-
-                            mAuth.signInWithEmailAndPassword(emailTxt, passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()){
-                                        // redirect to user profile
-                                        startActivity(new Intent(Login.this, ProfileActivity.class));
-
-
-                                    }else{
-                                        Toast.makeText(Login.this, "Failed to login!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
                         }
-
+                    }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Log.d("Login", e.getMessage());
+                            Toast.makeText(Login.this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
                         }
                     });
+
+
 
                 }
             }
@@ -112,4 +97,12 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        email.getText().clear();
+        password.getText().clear();
+    }
+
 }

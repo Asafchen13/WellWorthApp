@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.loginregisterfirebase.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/assetsFragment"
+        android:name="com.example.loginregisterfirebase.fragments.AssetsFragment"
+        android:label="fragment_assets"
+        tools:layout="@layout/fragment_assets" />
+    <fragment
+        android:id="@+id/cryptoCurrenciesFragment"
+        android:name="com.example.loginregisterfirebase.fragments.CryptoCurrenciesFragment"
+        android:label="fragment_crypto_currencies"
+        tools:layout="@layout/fragment_crypto_currencies" />
+    <fragment
+        android:id="@+id/stocksFragment"
+        android:name="com.example.loginregisterfirebase.fragments.StocksFragment"
+        android:label="fragment_stocks"
+        tools:layout="@layout/fragment_stocks" />
+    <fragment
+        android:id="@+id/fundsFragment"
+        android:name="com.example.loginregisterfirebase.fragments.FundsFragment"
+        android:label="fragment_funds"
+        tools:layout="@layout/fragment_funds" />
+</navigation>

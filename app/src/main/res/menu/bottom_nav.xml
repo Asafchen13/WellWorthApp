@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"/>
+    <item
+        android:id="@+id/assetsFragment"
+        android:title="Assets"
+        android:icon="@drawable/ic_baseline_apartment_24"/>
+    <item
+        android:id="@+id/cryptoCurrenciesFragment"
+        android:title="Crypto"
+        android:icon="@drawable/ic_baseline_monetization_on_24"/>
+    <item
+        android:id="@+id/stocksFragment"
+        android:title="Stocks"
+        android:icon="@drawable/ic_baseline_trending_up_24"/>
+    <item
+        android:id="@+id/fundsFragment"
+        android:title="Funds"
+        android:icon="@drawable/ic_baseline_request_quote_24"/>
+
+</menu>

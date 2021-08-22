@@ -1,3 +1,138 @@
 <resources>
-    <string name="app_name">LoginRegisterFirebase</string>
+    <string name="app_name">Well Worth</string>
+    <string name="main_logo">Logo</string>
+
+    <string name="total_balance">Total Balance</string>
+    <string name="assets">Assets</string>
+    <string name="crypto_coins">Crypto Coins</string>
+    <string name="stocks">Stocks</string>
+    <string name="financial_funds">Financial Funds</string>
+    <string name="total_value">Total Value</string>
+
+    <string name="add_coin_btn">Add Coin</string>
+    <string name="add_asset_btn">Add Asset</string>
+    <string name="add_stock_btn">Add Stock</string>
+    <string name="add_fund_btn">Add Fund</string>
+
+    <string name="edit_btn">Edit</string>
+    <string name="refresh_btn">Refresh</string>
+    <string name="done_btn">Done</string>
+    <string name="delete_btn">Delete</string>
+
+    <string name="name_lbl">Name : </string>
+    <string name="value_lbl">Value : </string>
+    <string name="price_lbl">Price (in $): </string>
+    <string name="type_lbl">Type : </string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="crypto_title">Crypto fragment</string>
+
+    <string-array name="Crypto_spinner">
+        <item>bitcoin</item>
+        <item>ethereum</item>
+        <item>cardano</item>
+        <item>binance-coin</item>
+        <item>tether</item>
+        <item>xrp</item>
+        <item>dogecoin</item>
+        <item>usd-coin</item>
+        <item>polkadot</item>
+        <item>solana</item>
+        <item>uniswap</item>
+        <item>terra-luna</item>
+        <item>binance-usd</item>
+        <item>bitcoin-cash</item>
+        <item>chainlink</item>
+        <item>litecoin</item>
+        <item>internet-computer</item>
+        <item>wrapped-bitcoin</item>
+        <item>polygon</item>
+        <item>ethereum-classic</item>
+        <item>stellar</item>
+        <item>vechain</item>
+        <item>theta</item>
+        <item>filecoin</item>
+        <item>multi-collateral-dai</item>
+        <item>tron</item>
+        <item>avalanche</item>
+        <item>aave</item>
+        <item>cosmos</item>
+        <item>eos</item>
+        <item>monero</item>
+        <item>pancakeswap</item>
+        <item>ftx-token</item>
+        <item>klaytn</item>
+        <item>axie-infinity</item>
+        <item>the-graph</item>
+        <item>crypto-com-coin</item>
+        <item>neo</item>
+        <item>maker</item>
+        <item>bitcoin-bep2</item>
+        <item>algorand</item>
+        <item>shiba-inu</item>
+        <item>tezos</item>
+        <item>bitcoin-sv</item>
+        <item>unus-sed-leo</item>
+        <item>elrond-egld</item>
+        <item>iota</item>
+        <item>bittorrent</item>
+        <item>amp</item>
+        <item>waves</item>
+        <item>kusama</item>
+        <item>compound</item>
+        <item>huobi-token</item>
+        <item>terrausd</item>
+        <item>quant</item>
+        <item>dash</item>
+        <item>hedera-hashgraph</item>
+        <item>decred</item>
+        <item>fei-protocol</item>
+        <item>helium</item>
+        <item>near-protocol</item>
+        <item>chiliz</item>
+        <item>xinfin-network</item>
+        <item>counos-x</item>
+        <item>thorchain</item>
+        <item>holo</item>
+        <item>zcash</item>
+        <item>nem</item>
+        <item>theta-fuel</item>
+        <item>sushiswap</item>
+        <item>audius</item>
+        <item>celsius</item>
+        <item>decentraland</item>
+        <item>trueusd</item>
+        <item>yearn-finance</item>
+        <item>synthetix-network-token</item>
+        <item>ravencoin</item>
+        <item>enjin-coin</item>
+        <item>qtum</item>
+        <item>voyager-token</item>
+        <item>okb</item>
+        <item>fantom</item>
+        <item>zilliqa</item>
+        <item>basic-attention-token</item>
+        <item>bitcoin-gold</item>
+        <item>arweave</item>
+        <item>harmony</item>
+        <item>nexo</item>
+        <item>safemoon</item>
+        <item>telcoin</item>
+        <item>bancor</item>
+        <item>digibyte</item>
+        <item>ontology</item>
+        <item>revain</item>
+        <item>celo</item>
+        <item>siacoin</item>
+        <item>defichain</item>
+        <item>mdex</item>
+        <item>0x</item>
+        <item>perpetual-protocol</item>
+    </string-array>
+
+
 </resources>

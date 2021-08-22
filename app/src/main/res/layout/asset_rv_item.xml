@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/asset_rv_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardBackgroundColor="@color/black_shade_2"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:id="@+id/assets_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/asset_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:text="asset name"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/delete_asset_btn"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/color_one"
+            android:drawableLeft="@drawable/ic_baseline_delete_24"
+
+            android:text="@string/delete_btn"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/asset_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/asset_name_tv"
+            android:layout_alignParentStart="true"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:text="asset type"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/edit_asset_btn"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/delete_asset_btn"
+            android:layout_alignParentEnd="true"
+            android:drawableLeft="@drawable/ic_baseline_edit_24"
+            android:text="@string/edit_btn"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/asset_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/asset_type_tv"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:text="asset value"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+

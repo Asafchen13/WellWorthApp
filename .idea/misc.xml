@@ -7,6 +7,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2441123188405797" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2441123188405797" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.1413373860182371" />
+        <entry key="app/src/main/res/layout/add_coin_dialog.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/add_crypto_popup.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/asset_rv_item.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/layout/cryptyo_curr_rv_item.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/layout/fragment_crypto_currencies.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/menu/bottom_nav.xml" value="0.23489583333333333" />
       </map>
     </option>
   </component>
