@@ -18,11 +18,24 @@
     <string name="refresh_btn">Refresh</string>
     <string name="done_btn">Done</string>
     <string name="delete_btn">Delete</string>
+    <string name="cancel_btn">Cancel</string>
 
     <string name="name_lbl">Name : </string>
     <string name="value_lbl">Value : </string>
     <string name="price_lbl">Price (in $): </string>
     <string name="type_lbl">Type : </string>
+
+    <string name="coin_name_hint">Coin Name</string>
+    <string name="amount_hint"> Amount of Coins</string>
+
+    <string name="asset_name_hint"> Asset Name</string>
+    <string name="asset_type_hint">Asset Type (Apartment/ House/ Shop etc...)</string>
+
+    <string name="fund_name_hint"> Fund Name</string>
+    <string name="fund_company_hint">Fund Management Company Name</string>
+
+    <string name="value_hint">Value in $</string>
+
 
     <string name="yes">Yes</string>
     <string name="no">No</string>

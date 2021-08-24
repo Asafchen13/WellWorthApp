@@ -24,6 +24,12 @@ public class Cryptocurrency {
         this.amount = amount;
     }
 
+    public Cryptocurrency(String id, String name, double amount) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+    }
+
     public String getId() {
         return id;
     }

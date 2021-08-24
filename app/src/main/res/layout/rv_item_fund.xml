@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fund_rv_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardBackgroundColor="@color/black_shade_2"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:id="@+id/funds_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/fund_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:text="fund name"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/delete_fund_btn"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/color_one"
+            android:drawableLeft="@drawable/ic_baseline_delete_24"
+            android:text="@string/delete_btn"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            tools:ignore="TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/fund_company_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fund_name_tv"
+            android:layout_alignParentStart="true"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:text="fund type"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/edit_fund_btn"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/delete_fund_btn"
+            android:layout_alignParentEnd="true"
+            android:drawableLeft="@drawable/ic_baseline_edit_24"
+            android:text="@string/edit_btn"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            tools:ignore="TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/fund_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fund_company_tv"
+            android:layout_alignParentStart="true"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:text="fund value"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

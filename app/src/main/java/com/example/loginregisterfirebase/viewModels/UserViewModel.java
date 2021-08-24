@@ -1,17 +1,23 @@
-package com.example.loginregisterfirebase;
+package com.example.loginregisterfirebase.viewModels;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.loginregisterfirebase.fragments.CryptoCurrenciesFragment;
 import com.example.loginregisterfirebase.logic.Asset;
 import com.example.loginregisterfirebase.logic.Cryptocurrency;
 import com.example.loginregisterfirebase.logic.Fund;
 import com.example.loginregisterfirebase.logic.Stock;
 import com.example.loginregisterfirebase.logic.User;
+import com.example.loginregisterfirebase.managers.CryptoAPIManager;
 import com.example.loginregisterfirebase.managers.DatabaseManager;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -20,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class UserViewModel extends ViewModel {
@@ -27,7 +34,6 @@ public class UserViewModel extends ViewModel {
     private static final String TAG = "USER_VIEW_MODEL";
 
     private User user;
-
     private MutableLiveData<User> mUser;
     private MutableLiveData<List<Cryptocurrency>> cryptocurrencies;
     private MutableLiveData<List<Asset>> assets;
@@ -71,14 +77,6 @@ public class UserViewModel extends ViewModel {
         return funds;
     }
 
-    public MutableLiveData<List<Stock>> getStocks() {
-        if (stocks == null) {
-            stocks = new MutableLiveData<>();
-            loadStocks(list -> {
-            });
-        }
-        return stocks;
-    }
 
     private void loadUser(FireBaseUserCallback fireBaseUserCallback) {
         try {
@@ -187,9 +185,15 @@ public class UserViewModel extends ViewModel {
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     user.getFunds().clear();
                     for (DataSnapshot fundSnapshot : snapshot.getChildren()) {
-                        String name = fundSnapshot.getValue(String.class);
-                        String company = fundSnapshot.child("company").getValue(String.class);
-                        double value = Double.parseDouble(Objects.requireNonNull(fundSnapshot.child("type").getValue(String.class)));
+                        String name = fundSnapshot
+                                .child(DatabaseManager.FUNDS_NAME)
+                                .getValue(String.class);
+                        String company = fundSnapshot
+                                .child(DatabaseManager.FUND_COMP)
+                                .getValue(String.class);
+                        double value = fundSnapshot
+                                       .child(DatabaseManager.FUND_VALUE)
+                                       .getValue(double.class);
 
                         Fund fund = new Fund(name, company, value);
                         user.getFunds().add(fund);
@@ -211,10 +215,32 @@ public class UserViewModel extends ViewModel {
 
     }
 
-    private void loadStocks(FireBaseCallback fireBaseCallback) {
+    public void updateCryptoData(CryptoAPIManager cryptoAPIManager) {
+        for (Cryptocurrency c : user.getCryptocurrencies()) {
+            cryptoAPIManager.makeCoinDataRequest(c, new CryptoAPIManager.CryptoApiCallBack() {
+                @Override
+                public void onCallBack(Map<String, Object> map) {
+                    if (map != null) {
+                        Log.d(TAG, "updateCryptoData() + map = " + map.toString());
+                        try {
+                            DatabaseManager.getInstance().getUserCryptoRef().child(c.getId())
+                                    .child(CryptoAPIManager.PRICE)
+                                    .setValue(Double.parseDouble(map.get(CryptoAPIManager.PRICE).toString()));
+                            DatabaseManager.getInstance().getUserCryptoRef().child(c.getId())
+                                    .child(CryptoAPIManager.CHANGE_PERCENT)
+                                    .setValue(Double.parseDouble(map.get(CryptoAPIManager.CHANGE_PERCENT).toString()));
+                        } catch (Exception e) {
+                            Log.e(TAG, "updateCryptoData() error : " + e.getMessage());
+                        }
+                    } else {
+                    }
+                }
+            });
+        }
 
     }
 
+    // CallBack interfaces.
     private interface FireBaseCallback {
         void onCallback(List<?> list);
     }

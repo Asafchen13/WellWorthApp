@@ -1,10 +1,7 @@
 package com.example.loginregisterfirebase;
 
-import android.content.ComponentName;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.loginregisterfirebase.logic.User;
+import com.example.loginregisterfirebase.viewModels.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePage extends AppCompatActivity{
@@ -25,6 +23,7 @@ public class HomePage extends AppCompatActivity{
 
     private Handler handler;
     private boolean isBound = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +54,6 @@ public class HomePage extends AppCompatActivity{
     protected void onStop() {
         super.onStop();
     }
+
 
 }

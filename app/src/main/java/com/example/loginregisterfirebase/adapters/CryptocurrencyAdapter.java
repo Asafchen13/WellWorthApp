@@ -3,6 +3,7 @@ package com.example.loginregisterfirebase.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.loginregisterfirebase.HomePage;
 import com.example.loginregisterfirebase.R;
-import com.example.loginregisterfirebase.fragments.CryptoCurrenciesFragment;
 import com.example.loginregisterfirebase.logic.Cryptocurrency;
+import com.example.loginregisterfirebase.interfaces.mClickListener;
+import com.example.loginregisterfirebase.managers.DatabaseManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +28,6 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
     private static DecimalFormat df = new DecimalFormat("#.##");
     private ArrayList<Cryptocurrency> cryptocurrencies;
     private Context context;
-    private ViewGroup parent;
 
     public CryptocurrencyAdapter(ArrayList<Cryptocurrency> cryptocurrencies, Context context) {
         this.cryptocurrencies = cryptocurrencies;
@@ -35,16 +35,11 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
 
     }
 
-    public void filterList(ArrayList<Cryptocurrency> cryptocurrencies) {
-        this.cryptocurrencies = cryptocurrencies;
-        this.notifyDataSetChanged();
-    }
-
     @NonNull
     @NotNull
     @Override
     public CryptocurrencyVH onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cryptyo_curr_rv_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_cryptyo_curr, parent, false);
         CryptocurrencyVH vh = new CryptocurrencyVH(view, new mClickListener() {
             @Override
             public void onDelete(int p) {
@@ -54,7 +49,8 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                Cryptocurrency c = cryptocurrencies.get(p);
+                                DatabaseManager.getInstance().deleteCryptocurrency(c);
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -76,11 +72,18 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
         holder.price_tv.setText("USD Price : " + df.format(cryptocurrency.getPriceUsd()));
         holder.symbol_tv.setText("Symbol: " + cryptocurrency.getId());
         holder.amount_tv.setText("Amount " + String.valueOf(cryptocurrency.getAmount()));
+        if (cryptocurrency.getChangePercent24Hr() < 0) {
+            holder.coin_change_percentage_tv.setTextColor((context.getResources().getColor(R.color.red)));
+            holder.coin_change_percentage_tv.setText("-" + String.valueOf(cryptocurrency.getAmount()) + "%");
+
+        } else {
+            holder.coin_change_percentage_tv.setTextColor((context.getResources().getColor(R.color.green_200)));
+            holder.coin_change_percentage_tv.setText(String.valueOf(cryptocurrency.getAmount()) + "%");
+
+        }
 
         double val = cryptocurrency.getAmount() * cryptocurrency.getPriceUsd();
         holder.value_tv.setText("Value: " + df.format(val));
-
-
     }
 
     @Override
@@ -89,11 +92,10 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
     }
 
 
-
     public class CryptocurrencyVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private mClickListener listener;
-        private TextView symbol_tv, name_tv, price_tv, value_tv, amount_tv;
+        private TextView symbol_tv, name_tv, price_tv, value_tv, amount_tv, coin_change_percentage_tv;
         Button delete_btn, edit_btn;
 
         public CryptocurrencyVH(@NonNull @NotNull View itemView, mClickListener listener) {
@@ -105,6 +107,7 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
             price_tv = itemView.findViewById(R.id.coin_price_tv);
             value_tv = itemView.findViewById(R.id.coins_value_tv);
             amount_tv = itemView.findViewById(R.id.coin_amount_tv);
+            coin_change_percentage_tv = itemView.findViewById(R.id.coin_change_percentage_tv);
             delete_btn = itemView.findViewById(R.id.delete_btn);
             edit_btn = itemView.findViewById(R.id.edit_btn);
 
@@ -127,9 +130,5 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
         }
     }
 
-    public interface mClickListener {
-        void onDelete(int p);
 
-        void onEdit(int p);
-    }
 }

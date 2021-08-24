@@ -20,11 +20,6 @@
         android:label="fragment_crypto_currencies"
         tools:layout="@layout/fragment_crypto_currencies" />
     <fragment
-        android:id="@+id/stocksFragment"
-        android:name="com.example.loginregisterfirebase.fragments.StocksFragment"
-        android:label="fragment_stocks"
-        tools:layout="@layout/fragment_stocks" />
-    <fragment
         android:id="@+id/fundsFragment"
         android:name="com.example.loginregisterfirebase.fragments.FundsFragment"
         android:label="fragment_funds"

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.loginregisterfirebase.R;
-import com.example.loginregisterfirebase.UserViewModel;
+import com.example.loginregisterfirebase.viewModels.UserViewModel;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;

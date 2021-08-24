@@ -1,5 +1,7 @@
 package com.example.loginregisterfirebase.logic;
 
+import java.util.Map;
+
 public class Asset {
     private String name;
     private String type;
@@ -37,4 +39,5 @@ public class Asset {
     public void setValue(double value) {
         this.value = value;
     }
+
 }
