@@ -2,10 +2,17 @@ package com.example.loginregisterfirebase.managers;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.loginregisterfirebase.logic.Asset;
 import com.example.loginregisterfirebase.logic.Cryptocurrency;
 import com.example.loginregisterfirebase.logic.Fund;
 import com.example.loginregisterfirebase.logic.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -96,7 +103,21 @@ public class DatabaseManager {
         }
     }
 
-    public void deleteAsset(Asset asset) {
+    public void editCryptocurrency(Cryptocurrency cryptocurrency) {
+        try {
+            myDatabaseReference.child(USERS).child(AuthenticationManager.getInstance().getCurrentUser().getUid())
+                    .child(CRYPTO)
+                    .child(cryptocurrency.getId())
+                    .setValue(cryptocurrency);
+            Log.d(TAG, "updateCryptocurrency(), crypto updated");
+        } catch (Exception e) {
+            Log.e(TAG, "updateCryptocurrency() " + e.getMessage());
+
+        }
+    }
+
+
+        public void deleteAsset(Asset asset) {
         try {
             myDatabaseReference.child(USERS).child(AuthenticationManager.getInstance().getCurrentUser().getUid())
                     .child(ASSETS)
@@ -109,12 +130,12 @@ public class DatabaseManager {
         }
     }
 
-    public void addNewAsset(Asset a) {
+    public void addNewAsset(Asset asset) {
         try {
             myDatabaseReference.child(USERS).child(AuthenticationManager.getInstance().getCurrentUser().getUid())
                     .child(ASSETS)
-                    .child(a.getName())
-                    .setValue(a);
+                    .child(asset.getName())
+                    .setValue(asset);
             Log.d(TAG + "addNewAsset", "asset added");
         } catch (Exception e) {
             Log.e(TAG + "addNewAsset", e.getMessage());
@@ -138,12 +159,12 @@ public class DatabaseManager {
         }
     }
 
-    public void addNewFund(Fund f) {
+    public void addNewFund(Fund fund) {
         try {
             myDatabaseReference.child(USERS).child(AuthenticationManager.getInstance().getCurrentUser().getUid())
                     .child(FUNDS)
-                    .child(f.getName())
-                    .setValue(f);
+                    .child(fund.getName())
+                    .setValue(fund);
             Log.d(TAG + "addNewFund", "fund added");
         } catch (Exception e) {
             Log.e(TAG + "addNewFund", e.getMessage());
@@ -228,6 +249,23 @@ public class DatabaseManager {
     }
 
 
+    public void updatePassword(String new_p) {
+        FirebaseUser user = AuthenticationManager.getInstance().getCurrentUser();
 
+        user.updatePassword(new_p).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    Log.d(TAG + "updatePassword", "password updated");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG + "updatePassword() failed", e.getMessage());
+
+            }
+        });
+    }
 }
 

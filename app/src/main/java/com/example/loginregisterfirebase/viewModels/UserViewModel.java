@@ -1,15 +1,12 @@
 package com.example.loginregisterfirebase.viewModels;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.loginregisterfirebase.fragments.CryptoCurrenciesFragment;
 import com.example.loginregisterfirebase.logic.Asset;
 import com.example.loginregisterfirebase.logic.Cryptocurrency;
 import com.example.loginregisterfirebase.logic.Fund;
@@ -27,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class UserViewModel extends ViewModel {
 
@@ -38,7 +34,8 @@ public class UserViewModel extends ViewModel {
     private MutableLiveData<List<Cryptocurrency>> cryptocurrencies;
     private MutableLiveData<List<Asset>> assets;
     private MutableLiveData<List<Fund>> funds;
-    private MutableLiveData<List<Stock>> stocks;
+
+
 
 
     public MutableLiveData<User> getUser() {
@@ -76,8 +73,6 @@ public class UserViewModel extends ViewModel {
         }
         return funds;
     }
-
-
     private void loadUser(FireBaseUserCallback fireBaseUserCallback) {
         try {
             if (user == null) {
@@ -192,8 +187,8 @@ public class UserViewModel extends ViewModel {
                                 .child(DatabaseManager.FUND_COMP)
                                 .getValue(String.class);
                         double value = fundSnapshot
-                                       .child(DatabaseManager.FUND_VALUE)
-                                       .getValue(double.class);
+                                .child(DatabaseManager.FUND_VALUE)
+                                .getValue(double.class);
 
                         Fund fund = new Fund(name, company, value);
                         user.getFunds().add(fund);
@@ -232,13 +227,13 @@ public class UserViewModel extends ViewModel {
                         } catch (Exception e) {
                             Log.e(TAG, "updateCryptoData() error : " + e.getMessage());
                         }
-                    } else {
                     }
                 }
             });
         }
 
     }
+
 
     // CallBack interfaces.
     private interface FireBaseCallback {

@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loginregisterfirebase.R;
+import com.example.loginregisterfirebase.dialogs.EditCoinDialog;
 import com.example.loginregisterfirebase.logic.Cryptocurrency;
 import com.example.loginregisterfirebase.interfaces.mClickListener;
 import com.example.loginregisterfirebase.managers.DatabaseManager;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 
 public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAdapter.CryptocurrencyVH> {
 
-    private static DecimalFormat df = new DecimalFormat("#.##");
+    private static DecimalFormat df = new DecimalFormat("###,###,###.##");
     private ArrayList<Cryptocurrency> cryptocurrencies;
     private Context context;
 
@@ -44,7 +46,7 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
             @Override
             public void onDelete(int p) {
                 new AlertDialog.Builder(parent.getContext())
-                        .setTitle("Title")
+                        .setTitle("Delete")
                         .setMessage("Are you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
@@ -59,7 +61,13 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
 
             @Override
             public void onEdit(int p) {
-
+                Cryptocurrency c = cryptocurrencies.get(p);
+                EditCoinDialog editCoinDialog = new EditCoinDialog();
+                editCoinDialog.setCoin_type(c.getId());
+                editCoinDialog.setOld_coin_name(c.getName());
+                editCoinDialog.setOld_coin_amount(String.valueOf(c.getAmount()));
+                editCoinDialog.setCancelable(true);
+                editCoinDialog.show(((AppCompatActivity)parent.getContext()).getSupportFragmentManager(), "edit asset dialog");
             }
         });
         return vh;
@@ -78,12 +86,12 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
 
         } else {
             holder.coin_change_percentage_tv.setTextColor((context.getResources().getColor(R.color.green_200)));
-            holder.coin_change_percentage_tv.setText(String.valueOf(cryptocurrency.getAmount()) + "%");
+            holder.coin_change_percentage_tv.setText("+" + String.valueOf(cryptocurrency.getAmount()) + "%");
 
         }
 
         double val = cryptocurrency.getAmount() * cryptocurrency.getPriceUsd();
-        holder.value_tv.setText("Value: " + df.format(val));
+        holder.value_tv.setText("Value: " + df.format(val) + "$");
     }
 
     @Override

@@ -19,9 +19,9 @@ import com.example.loginregisterfirebase.logic.Asset;
 import com.example.loginregisterfirebase.managers.DatabaseManager;
 
 public class EditAssetDialog extends DialogFragment {
-    EditText asset_new_name_et;
-    EditText asset_new_type_et;
-    EditText asset_new_value_et;
+    private EditText asset_new_name_et;
+    private EditText asset_new_type_et;
+    private EditText asset_new_value_et;
 
     private String old_asset_name;
     private String old_asset_type;
@@ -59,30 +59,22 @@ public class EditAssetDialog extends DialogFragment {
 
 
         builder.setTitle(R.string.edit_btn)
-                .setPositiveButton(R.string.done_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Asset oldAsset = new Asset(
-                                old_asset_name,
-                                old_asset_type,
-                                Double.parseDouble(old_asset_value)
-                        );
-                        Asset newAsset = new Asset(
-                                asset_new_name_et.getText().toString(),
-                                asset_new_type_et.getText().toString(),
-                                Double.parseDouble(asset_new_value_et.getText().toString())
-                        );
+                .setPositiveButton(R.string.done_btn, (dialog, which) -> {
+                    Asset oldAsset = new Asset(
+                            old_asset_name,
+                            old_asset_type,
+                            Double.parseDouble(old_asset_value)
+                    );
+                    Asset newAsset = new Asset(
+                            asset_new_name_et.getText().toString(),
+                            asset_new_type_et.getText().toString(),
+                            Double.parseDouble(asset_new_value_et.getText().toString())
+                    );
 
-                        DatabaseManager.getInstance().updateAsset(oldAsset, newAsset);
+                    DatabaseManager.getInstance().updateAsset(oldAsset, newAsset);
 
-                    }
                 })
-                .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditAssetDialog.this.getDialog().cancel();
-                    }
-                });
+                .setNegativeButton(R.string.cancel_btn, (dialog, which) -> EditAssetDialog.this.getDialog().cancel());
         return builder.create();
     }
 }

@@ -20,6 +20,8 @@ import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -31,8 +33,9 @@ public class HomeFragment extends Fragment {
     private TextView coins_amount_tv;
     private TextView assets_amount_tv;
     private TextView funds_amount_tv;
-    private TextView stocks_amount_tv;
     private TextView total_balance_TV;
+
+    private static DecimalFormat df = new DecimalFormat("###,###,###.##");
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,7 +88,6 @@ public class HomeFragment extends Fragment {
         coins_amount_tv = view.findViewById(R.id.crypto_amount_tv);
         assets_amount_tv = view.findViewById(R.id.assets_amount_tv);
         funds_amount_tv = view.findViewById(R.id.funds_amount_tv);
-        stocks_amount_tv = view.findViewById(R.id.stocks_amount_tv);
 
         pieChart = view.findViewById(R.id.piechart);
 
@@ -104,9 +106,43 @@ public class HomeFragment extends Fragment {
 
         userViewModel.getAssets().observe(getViewLifecycleOwner(), assets -> {
             assets_amount_tv.setText(String.valueOf(assets.size()));
-            pieChart.addPieSlice(new PieModel("Crypto", assets.size() % 100, Color.parseColor("#66BB6A")));
+            pieChart.addPieSlice(new PieModel("Asset", assets.size() % 100, Color.parseColor("#66BB6A")));
+        });
+
+        userViewModel.getFunds().observe(getViewLifecycleOwner(), funds -> {
+            funds_amount_tv.setText(String.valueOf(funds.size()));
+            pieChart.addPieSlice(new PieModel("Funds", funds.size() %100,Color.parseColor("#EF5350")));
+
+        });
+
+        userViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
+            total_balance_TV.setText(df.format(user.getTotalValue()));
+
+            coins_amount_tv.setText(df.format(user.getCoinsValue()) + "$");
+            assets_amount_tv.setText(df.format(user.getAssetsValue()));
+            funds_amount_tv.setText(df.format(user.getFundsValue()));
+
+            float coinsPercent = (float)(user.getCoinsValue() / user.getTotalValue());
+            float assetPercent = (float) (user.getAssetsValue() / user.getTotalValue());
+            float fundsPercent = (float) (user.getFundsValue() / user.getTotalValue());
+
+            pieChart.addPieSlice(new PieModel(
+                    coinsPercent,
+                    Color.parseColor("#FFA726")));
+
+            pieChart.addPieSlice(new PieModel());
+
+            pieChart.addPieSlice(new PieModel(
+                    assetPercent,
+                    Color.parseColor("#66BB6A")));
+
+            pieChart.addPieSlice(new PieModel(
+                    fundsPercent,
+                    Color.parseColor("#EF5350")));
+
         });
     }
+
 
 
 }

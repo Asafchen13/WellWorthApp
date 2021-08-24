@@ -1,6 +1,5 @@
 package com.example.loginregisterfirebase;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,26 +12,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.loginregisterfirebase.logic.Cryptocurrency;
-import com.example.loginregisterfirebase.managers.AppManager;
-import com.example.loginregisterfirebase.managers.CryptoAPIManager;
-import com.example.loginregisterfirebase.managers.DatabaseManager;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Platform;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
@@ -63,15 +48,13 @@ public class Login extends AppCompatActivity {
                 final String passwordTxt = password.getText().toString();
 
                 if (emailTxt.isEmpty() || passwordTxt.isEmpty()) {
-                    Toast.makeText(Login.this, "Please enter your Email or Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Please enter your Email and Password", Toast.LENGTH_SHORT).show();
                 } else {
-
                     mAuth.signInWithEmailAndPassword(emailTxt, passwordTxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             Log.d("Login", authResult.toString());
                             startActivity(new Intent(Login.this, HomePage.class));
-
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

@@ -24,9 +24,8 @@ import java.util.Map;
 
 public class AddCoinDialog extends DialogFragment {
 
-    EditText coin_name_et;
+    EditText coin_name_et, coins_amount_et;
     Spinner coin_type_spinner;
-    EditText coins_amount_et;
 
     CryptoCurrenciesFragment.apiRequestExecutor executor;
     Handler handler = new Handler(Looper.myLooper());

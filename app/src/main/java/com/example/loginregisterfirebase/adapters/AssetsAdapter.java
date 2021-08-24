@@ -21,12 +21,15 @@ import com.example.loginregisterfirebase.managers.DatabaseManager;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class AssetsAdapter extends RecyclerView.Adapter<AssetsAdapter.AssetsVH>{
 
     private List<Asset> assets;
     private Context context;
+    private static DecimalFormat df = new DecimalFormat("###,###,###.##");
+
     public AssetsAdapter(List<Asset> assets, Context context) {
         this.assets = assets;
         this.context = context;
@@ -42,7 +45,7 @@ public class AssetsAdapter extends RecyclerView.Adapter<AssetsAdapter.AssetsVH>{
             @Override
             public void onDelete(int p) {
                 new AlertDialog.Builder(parent.getContext())
-                        .setTitle("Title")
+                        .setTitle("Delete")
                         .setMessage("Are you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
@@ -74,7 +77,7 @@ public class AssetsAdapter extends RecyclerView.Adapter<AssetsAdapter.AssetsVH>{
         Asset asset = this.assets.get(position);
         holder.name_tv.setText(asset.getName());
         holder.type_tv.setText(asset.getType());
-        holder.value_tv.setText(String.valueOf(asset.getValue()));
+        holder.value_tv.setText(df.format(asset.getValue()));
 
 
     }

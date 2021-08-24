@@ -1,7 +1,5 @@
 package com.example.loginregisterfirebase.managers;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -78,6 +76,10 @@ public class AuthenticationManager {
             }
         });
         return false;
+    }
+
+    public void signOut() {
+        firebaseAuth.signOut();
     }
 
     public FirebaseUser getCurrentUser(){

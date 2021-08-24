@@ -25,7 +25,7 @@ import java.util.List;
 
 public class FundsAdapter extends RecyclerView.Adapter<FundsAdapter.FundsVH> {
 
-    private static DecimalFormat df = new DecimalFormat("#.##");
+    private static DecimalFormat df = new DecimalFormat("###,###,####.##");
     private List<Fund> funds;
     private Context context;
 
@@ -43,7 +43,7 @@ public class FundsAdapter extends RecyclerView.Adapter<FundsAdapter.FundsVH> {
             @Override
             public void onDelete(int p) {
                 new AlertDialog.Builder(parent.getContext())
-                        .setTitle("Title")
+                        .setTitle("Delete")
                         .setMessage("Are you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
@@ -78,7 +78,7 @@ public class FundsAdapter extends RecyclerView.Adapter<FundsAdapter.FundsVH> {
         Fund fund = this.funds.get(position);
         holder.name_tv.setText(fund.getName());
         holder.company_tv.setText(fund.getCompany());
-        holder.value_tv.setText(String.valueOf(fund.getValue()));
+        holder.value_tv.setText(df.format(fund.getValue()));
 
     }
 

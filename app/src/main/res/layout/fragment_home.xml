@@ -16,7 +16,7 @@
         android:fontFamily="sans-serif-black"
         android:text="@string/total_balance"
         android:textAlignment="center"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="#A1887F"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -133,25 +133,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="5dp">
-
-                    <View
-                        android:layout_width="15dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/Stocks" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:text="@string/stocks" />
-
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -203,9 +184,8 @@
                     android:id="@+id/crypto_amount_tv"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:fontFamily="sans-serif-light"
-                    android:text="0"
                     android:textAlignment="textEnd"
                     android:textColor="@color/color_one"
                     android:textSize="18sp"
@@ -242,7 +222,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:fontFamily="sans-serif-light"
-                    android:text="0"
                     android:textAlignment="textEnd"
                     android:textColor="@color/color_one"
                     android:textSize="18sp"
@@ -279,7 +258,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:fontFamily="sans-serif-light"
-                    android:text="0"
                     android:textAlignment="textEnd"
                     android:textColor="@color/color_one"
                     android:textSize="18sp"
@@ -294,35 +272,6 @@
                 android:layout_marginRight="20dp"
                 android:background="@color/color_two" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/stocks"
-                    android:textSize="18sp" />
-
-
-                <TextView
-                    android:id="@+id/stocks_amount_tv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:fontFamily="sans-serif-light"
-                    android:text="0"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/color_one"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
 
         </LinearLayout>
 
