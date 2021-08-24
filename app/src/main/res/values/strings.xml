@@ -18,11 +18,41 @@
     <string name="refresh_btn">Refresh</string>
     <string name="done_btn">Done</string>
     <string name="delete_btn">Delete</string>
+    <string name="cancel_btn">Cancel</string>
 
     <string name="name_lbl">Name : </string>
     <string name="value_lbl">Value : </string>
     <string name="price_lbl">Price (in $): </string>
     <string name="type_lbl">Type : </string>
+
+    <string name="coin_name_hint">Coin Name</string>
+    <string name="amount_hint"> Amount of Coins</string>
+
+    <string name="asset_name_hint"> Asset Name</string>
+    <string name="asset_type_hint">Asset Type (Apartment/ House/ Shop etc...)</string>
+
+    <string name="fund_name_hint"> Fund Name</string>
+    <string name="fund_company_hint">Fund Management Company Name</string>
+
+    <string name="value_hint">Value in $</string>
+
+    <string name="login_here">Login Here</string>
+    <string name="register_here">Register Here</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="repeat_new_password">Repeat New Password</string>
+    <string name="register_btn">Register</string>
+    <string name="login_btn">Login</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login_now">Login Now</string>
+    <string name="change_password">Change Password</string>
+    <string name="edit_profile">Edit Profile</string>
+
 
     <string name="yes">Yes</string>
     <string name="no">No</string>

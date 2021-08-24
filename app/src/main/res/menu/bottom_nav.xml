@@ -13,10 +13,6 @@
         android:title="Crypto"
         android:icon="@drawable/ic_baseline_monetization_on_24"/>
     <item
-        android:id="@+id/stocksFragment"
-        android:title="Stocks"
-        android:icon="@drawable/ic_baseline_trending_up_24"/>
-    <item
         android:id="@+id/fundsFragment"
         android:title="Funds"
         android:icon="@drawable/ic_baseline_request_quote_24"/>

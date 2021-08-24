@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Cryptocurrency {
 
-    private String id;
+    private String id;  //represents the type
     private String name;
     private double priceUsd;
     private double changePercent24Hr;
@@ -21,6 +21,12 @@ public class Cryptocurrency {
         this.name = name;
         this.priceUsd = priceUsd;
         this.changePercent24Hr = changePercent24Hr;
+        this.amount = amount;
+    }
+
+    public Cryptocurrency(String id, String name, double amount) {
+        this.id = id;
+        this.name = name;
         this.amount = amount;
     }
 

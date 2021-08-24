@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,17 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.example.loginregisterfirebase.R;
-import com.example.loginregisterfirebase.UserViewModel;
+import com.example.loginregisterfirebase.dialogs.AddAssetDialog;
+import com.example.loginregisterfirebase.viewModels.UserViewModel;
 import com.example.loginregisterfirebase.adapters.AssetsAdapter;
-import com.example.loginregisterfirebase.adapters.CryptocurrencyAdapter;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +31,8 @@ public class AssetsFragment extends Fragment {
     private UserViewModel userViewModel;
     private AssetsAdapter adapter;
     private RecyclerView recyclerView;
+
+    private Button add_asset_btn;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -85,6 +84,8 @@ public class AssetsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        add_asset_btn = view.findViewById(R.id.add_asset_btn);
+
         return view;
     }
 
@@ -93,6 +94,15 @@ public class AssetsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
+        add_asset_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment addAssetDialog = new AddAssetDialog();
+                addAssetDialog.setCancelable(true);
+                addAssetDialog.show(getActivity().getSupportFragmentManager(), "add asset dialog");
+            }
+        });
         userViewModel.getAssets().observe(getViewLifecycleOwner(), assets -> {
             if (adapter == null) {
                 adapter = new AssetsAdapter( assets, getContext());

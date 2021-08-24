@@ -1,77 +1,99 @@
 package com.example.loginregisterfirebase.managers;
 
+import android.app.Activity;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.loginregisterfirebase.logic.Cryptocurrency;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.SyncHttpClient;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 import cz.msebera.android.httpclient.Header;
 
 public class CryptoAPIManager {
 
-//
-//    private final String BASE_URL = "http://api.coinlayer.com/list?access_key=ff1a3b7405800c23e97c37981ea6c6bcc";
-//    private final String BASE_URL1 = "https://api.nomics.com/v1/markets?key=150f7007b20fe2dbe239bd5b6efdf068cd25a238";
-    private static final String DATA = "data";
-    private static final String ID = "id";
-    private static final String CHANGE_PERCENT = "changePercent24Hr";
-    private static final String PRICE = "priceUsd";
+    public static final String TAG = "CRYPTO_API_MANAGER";
+
+    public static final String DATA = "data";
+    public static final String ID = "id";
+    public static final String CHANGE_PERCENT = "changePercent24Hr";
+    public static final String PRICE = "priceUsd";
 
 
     private final String BASE_URL = "https://api.coincap.io/v2/assets";
+    private final Executor executor;
+    private final Handler responseHandler;
+    private final Activity activity;
 
-    private static CryptoAPIManager instance = null;
-
-
-    private CryptoAPIManager() {
+    public CryptoAPIManager(Executor executor, Handler responseHandler, Activity activity) {
+        this.executor = executor;
+        this.responseHandler = responseHandler;
+        this.activity = activity;
     }
 
-    public static CryptoAPIManager getInstance() {
-        if (instance == null) {
-            instance = new CryptoAPIManager();
-        }
-        return instance;
-    }
+    public void makeCoinDataRequest(Cryptocurrency c, CryptoApiCallBack apiCallBack) {
+
+        executor.execute(() -> {
+            Looper.prepare();
+            try {
+                String cId = c.getId();
+                String url = BASE_URL + "/" + cId;
+                Map<String, Object> responseMap = new HashMap<>();
+                SyncHttpClient client1 = new SyncHttpClient();
+                client1.get(url, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        Log.d(TAG, "makeCoinDataRequest() ,onSuccess : statusCode : " + statusCode);
+                        try {
+                            JSONObject response = new JSONObject(new String(responseBody));
+                            JSONObject data = response.getJSONObject(DATA);
+                            responseMap.put(DatabaseManager.CRYPTO_ID, data.get(ID));
+                            responseMap.put(DatabaseManager.CRYPTO_PRICE, data.get(PRICE));
+                            responseMap.put(DatabaseManager.CRYPTO_CHNG_PERC, data.get(CHANGE_PERCENT));
+                            notifyResult(responseMap, apiCallBack);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "makeCoinDataRequest() : failed parse JSONObject");
+                            notifyResult(null, apiCallBack);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        Log.e(TAG, " makeCoinDataRequest() failed : onFailure " + error.getMessage() +
+                                ", statusCode :" + statusCode);
+                        notifyResult(null, apiCallBack);
+                        activity.runOnUiThread(() -> Toast.makeText(
+                                activity,
+                                error.getMessage() + ", try again in few seconds",
+                                Toast.LENGTH_SHORT)
+                                .show());
+                    }
+                });
 
 
-    public void getData(String crypto_symbol_name, CryptoApiCallBack cryptoApiCallBack) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        String url = BASE_URL + "/" + crypto_symbol_name;
-        client.get(url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                try {
-                    Map<String, Object> map = new HashMap<>();
-                    JSONObject response = new JSONObject(new String(responseBody));
-                    JSONObject data = response.getJSONObject(DATA);
-                    map.put(DatabaseManager.CRYPTO_ID, data.get(ID));
-                    map.put(DatabaseManager.CRYPTO_PRICE, data.get(PRICE));
-                    map.put(DatabaseManager.CRYPTO_CHNG_PERC, data.get(CHANGE_PERCENT));
-
-                    cryptoApiCallBack.onCallBack(map);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+            } catch (Exception e) {
+                Log.e(TAG, " makeCoinDataRequest() failed : " + e.getMessage());
+                notifyResult(null, apiCallBack);
             }
         });
+
     }
 
-    public interface CryptoApiCallBack{
+    private void notifyResult(Map<String, Object> map,
+                              CryptoApiCallBack apiCallBack) {
+        responseHandler.post(() -> apiCallBack.onCallBack(map));
+    }
+
+    public interface CryptoApiCallBack {
         void onCallBack(Map<String, Object> map);
     }
 }

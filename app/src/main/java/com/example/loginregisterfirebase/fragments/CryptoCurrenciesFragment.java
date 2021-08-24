@@ -4,24 +4,31 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.HandlerCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.loginregisterfirebase.dialogs.AddCoinDialog;
 import com.example.loginregisterfirebase.R;
-import com.example.loginregisterfirebase.UserViewModel;
+import com.example.loginregisterfirebase.viewModels.UserViewModel;
 import com.example.loginregisterfirebase.adapters.CryptocurrencyAdapter;
 import com.example.loginregisterfirebase.logic.Cryptocurrency;
+import com.example.loginregisterfirebase.managers.CryptoAPIManager;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.EventListener;
+import java.util.concurrent.Executor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +39,14 @@ public class CryptoCurrenciesFragment extends Fragment {
     private UserViewModel userViewModel;
     private CryptocurrencyAdapter adapter;
     private RecyclerView recyclerView;
+    private CryptoAPIManager cryptoAPIManager;
 
+    apiRequestExecutor executor;
+    Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
+
+
+    private Button refresh_btn;
+    private Button add_coin_btn;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -75,6 +89,8 @@ public class CryptoCurrenciesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        executor = new apiRequestExecutor();
+        cryptoAPIManager = new CryptoAPIManager(executor, mainThreadHandler, getActivity());
     }
 
     @Override
@@ -84,6 +100,9 @@ public class CryptoCurrenciesFragment extends Fragment {
         recyclerView = root.findViewById(R.id.crypto_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        refresh_btn = root.findViewById(R.id.refresh_btn);
+        add_coin_btn = root.findViewById(R.id.add_coin_btn);
+
 
         return root;
     }
@@ -94,18 +113,43 @@ public class CryptoCurrenciesFragment extends Fragment {
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
+        refresh_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleRefreshCoinsClicked();
+            }
+        });
+
+        add_coin_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment addCoinDialog = new AddCoinDialog();
+                addCoinDialog.setCancelable(true);
+                addCoinDialog.show(getActivity().getSupportFragmentManager(), "add coin dialog");
+            }
+        });
+
         userViewModel.getCryptocurrencies().observe(getViewLifecycleOwner(), cryptocurrencies -> {
             if (adapter == null) {
                 adapter = new CryptocurrencyAdapter((ArrayList) cryptocurrencies, getContext());
                 recyclerView.setAdapter(adapter);
-            }
-            else {
+            } else {
                 adapter.notifyDataSetChanged();
             }
         });
     }
 
-    public void handleDeleteCoinClicked() {
+    public void handleRefreshCoinsClicked() {
+
+        userViewModel.updateCryptoData(cryptoAPIManager);
+
+    }
+
+    public static class apiRequestExecutor implements Executor {
+        @Override
+        public void execute(Runnable command) {
+            new Thread(command).start();
+        }
 
     }
 

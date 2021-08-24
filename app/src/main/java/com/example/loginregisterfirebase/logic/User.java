@@ -16,14 +16,12 @@ public class User {
     private List<Cryptocurrency> cryptocurrencies;
     private List<Asset> assets;
     private List<Fund> funds;
-    private List<Stock> stocks;
 
 
     public User() {
         this.cryptocurrencies = new ArrayList<>();
         this.assets = new ArrayList<>();
         this.funds = new ArrayList<>();
-        this.stocks = new ArrayList<>();
     }
 
     public User(String userId, String name, String email, String phone) {
@@ -35,19 +33,8 @@ public class User {
         this.cryptocurrencies = new ArrayList<>();
         this.assets = new ArrayList<>();
         this.funds = new ArrayList<>();
-        this.stocks = new ArrayList<>();
     }
 
-    public User(String userId, String name, String email, String phone, List<Cryptocurrency> cryptocurrencies, List<Asset> assets, List<Fund> funds, List<Stock> stocks) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.cryptocurrencies = (ArrayList) cryptocurrencies;
-        this.assets = (ArrayList) assets;
-        this.funds = (ArrayList) funds;
-        this.stocks = (ArrayList) stocks;
-    }
 
     public String getUserId() {
         return userId;
@@ -105,13 +92,39 @@ public class User {
         this.funds = (ArrayList)funds;
     }
 
-    public List<Stock> getStocks() {
-        return stocks;
+    public double getTotalValue(){
+        double totalValue = 0;
+        totalValue = getCoinsValue()+getAssetsValue()+getFundsValue();
+        return totalValue;
     }
 
-    public void setStocks(List<Stock> stocks) {
-        this.stocks = (ArrayList)stocks;
+    public double getCoinsValue(){
+        double coinsValue = 0;
+
+        for(Cryptocurrency c : cryptocurrencies) {
+            coinsValue += c.getAmount() *c.getPriceUsd();
+        }
+        return coinsValue;
     }
+
+    public double getAssetsValue() {
+        double assetsValue = 0;
+
+        for (Asset a :assets) {
+            assetsValue += a.getValue();
+        }
+        return assetsValue;
+    }
+
+    public double getFundsValue() {
+        double fundsValue = 0;
+
+        for (Fund f: funds) {
+            fundsValue += f.getValue();
+        }
+        return fundsValue;
+    }
+
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> res = new HashMap<>();
@@ -132,7 +145,6 @@ public class User {
                 ", cryptocurrencies=" + cryptocurrencies +
                 ", assets=" + assets +
                 ", funds=" + funds +
-                ", stocks=" + stocks +
                 '}';
     }
 }

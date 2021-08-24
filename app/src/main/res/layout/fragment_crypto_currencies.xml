@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:paddingTop="10dp"
     tools:context=".fragments.CryptoCurrenciesFragment">
 
     <TextView
@@ -23,11 +22,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/crypto_rv"
         android:layout_width="380dp"
-        android:layout_height="450dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:maxHeight="160dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:nestedScrollingEnabled="true"
+        android:padding="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_coin_btn" />
@@ -35,7 +34,7 @@
     <Button
         android:id="@+id/add_coin_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
